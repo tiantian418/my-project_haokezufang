@@ -7,20 +7,18 @@ import React from 'react'
 
 import {BrowserRouter as Router,Route} from 'react-router-dom'
 
-// 测试antd-mobile
-import { Button } from 'antd-mobile'
-
 // 导入组件
 import Home from './pages/Home'
+import Citylist from './pages/Citylist'
 
 // 2.创建App组件
 class App extends React.Component {
   render () {
     return <Router>
-      <div>
-        <h1>App根组件</h1>
-        <Button type="primary">按钮</Button>
+      <div className="app">
         <Route path='/home' component={Home}></Route>
+        {/* 同级的兄弟 */}
+        <Route exact path='/citylist' component={Citylist}></Route>
       </div>
     </Router>
   }
