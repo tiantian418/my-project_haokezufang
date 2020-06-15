@@ -15,10 +15,59 @@ import Houselist from '../Houselist'
 import News from '../News'
 import Profile from '../Profile'
 
+// 数据不会改变 所以写在外边
+const tabItems = [
+  {
+    title: '首页',
+    icon: 'icon-ind',
+    path: '/home/index'
+  },
+  {
+    title: '找房',
+    icon: 'icon-findHouse',
+    path: '/home/houselist'
+  },
+  {
+    title: '资讯',
+    icon: 'icon-infom',
+    path: '/home/news'
+  },
+  {
+    title: '我的',
+    icon: 'icon-my',
+    path: '/home/profile'
+  }
+]
+
 class Home extends React.Component {
   state = {
     selectedTab: '/home/index', // 选中的标题
     hidden: false
+  }
+
+  renderTabbarItem () {
+    return tabItems.map ((item, index) => {
+      return <TabBar.Item
+        title={item.title}
+        key={index}
+        icon={ // 默认图标
+          <i className={`iconfont ${item.icon}`}></i>
+        }
+        selectedIcon={ // 选中图标
+          <i className={`iconfont ${item.icon}`}></i>
+        }
+        selected={this.state.selectedTab === item.path}
+        onPress={() => {
+          this.setState({
+            selectedTab: item.path
+          })
+          // 点击底部标题 切换跳转到对应的页面
+          this.props.history.push(item.path)
+        }}
+        data-seed="logId"
+      >
+      </TabBar.Item>
+    })
   }
 
   render () {
@@ -38,77 +87,8 @@ class Home extends React.Component {
           hidden={this.state.hidden} // 是否隐藏tabBar true: 隐藏
           noRenderContent={true} // 不渲染div内容 true: 不渲染
         >
-          <TabBar.Item
-            title="首页"
-            icon={ // 默认图标
-              <i className="iconfont icon-ind"></i>
-            }
-            selectedIcon={ // 选中图标
-              <i className="iconfont icon-ind"></i>
-            }
-            selected={this.state.selectedTab === '/home/index'}
-            onPress={() => {
-              this.setState({
-                selectedTab: '/home/index'
-              })
-              // 点击底部标题 切换跳转到对应的页面
-              this.props.history.push('/home/index')
-            }}
-            data-seed="logId"
-          >
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <i className="iconfont icon-findHouse"></i>
-            }
-            selectedIcon={
-              <i className="iconfont icon-findHouse"></i>
-            }
-            title="找房"
-            selected={this.state.selectedTab === '/home/houselist'}
-            onPress={() => {
-              this.setState({
-                selectedTab: '/home/houselist'
-              })
-              this.props.history.push('/home/houselist')
-            }}
-            data-seed="logId1"
-          >
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <i className="iconfont icon-infom"></i>
-            }
-            selectedIcon={
-              <i className="iconfont icon-infom"></i>
-            }
-            title="资讯"
-            selected={this.state.selectedTab === '/home/news'}
-            onPress={() => {
-              this.setState({
-                selectedTab: '/home/news'
-              })
-              this.props.history.push('/home/news')
-            }}
-          >
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <i className="iconfont icon-my"></i>
-            }
-            selectedIcon={
-              <i className="iconfont icon-my"></i>
-            }
-            title="我的"
-            selected={this.state.selectedTab === '/home/profile'}
-            onPress={() => {
-              this.setState({
-                selectedTab: '/home/profile'
-              })
-              this.props.history.push('/home/profile')
-            }}
-          >
-          </TabBar.Item>
+          {/* 调用renderTabbarItem函数 */}
+          { this.renderTabbarItem() }
         </TabBar>
       </div>
     )
