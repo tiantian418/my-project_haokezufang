@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/**
+ * 根组件
+ */
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// 1.导入react
+import React from 'react'
+
+import {BrowserRouter as Router,Route} from 'react-router-dom'
+
+// 测试antd-mobile
+import { Button } from 'antd-mobile'
+
+// 导入组件
+import Home from './pages/Home'
+
+// 2.创建App组件
+class App extends React.Component {
+  render () {
+    return <Router>
+      <div>
+        <h1>App根组件</h1>
+        <Button type="primary">按钮</Button>
+        <Route path='/home' component={Home}></Route>
+      </div>
+    </Router>
+  }
 }
 
-export default App;
+// 3.导出App组件
+export default App
