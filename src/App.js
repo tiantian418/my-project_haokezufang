@@ -5,7 +5,7 @@
 // 1.导入react
 import React from 'react'
 
-import {BrowserRouter as Router,Route, Redirect} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 // 导入组件
 import Home from './pages/Home'
