@@ -50,7 +50,8 @@ class Index extends React.Component {
     data: [], // 轮播图数据
     imgHeight: 176,
     isplay:false, // 是否自动轮播
-    groups: [] // 租房小组数据
+    groups: [], // 租房小组数据
+    news: [] // 最新资讯数据
   }
 
   // 页面初次渲染
@@ -59,6 +60,8 @@ class Index extends React.Component {
     this.getSwiperdata()
     // 发送请求 获取租房小组数据
     this.getGroups()
+    // 发送请求 获取最新资讯数据
+    this.getNews()
   }
 
   // 发送请求 获取轮播图
@@ -89,6 +92,15 @@ class Index extends React.Component {
     // 赋值数据给groups
     this.setState({
       groups: res.data.body
+    })
+  }
+
+  // 发送请求 获取最新资讯数据
+  async getNews() {
+    let res = await axios.get('http://api-haoke-dev.itheima.net/home/news?area=AREA%7C88cff55c-aaa4-e2e0')
+    // console.log("最新资讯数据", res)
+    this.setState({
+      news: res.data.body
     })
   }
 
@@ -125,6 +137,22 @@ class Index extends React.Component {
         <img alt='' src={item.img}></img>
       <p>{item.title}</p>
       </Flex.Item>
+    })
+  }
+
+  // 循环渲染最新资讯
+  renderNews () {
+    return this.state.news.map ( item => {
+      return <li key={ item.id }>
+        <img alt="" src={ `http://api-haoke-dev.itheima.net${item.imgSrc}` } />
+        <div className="item-right">
+          <h3>{ item.title }</h3>
+          <p>
+            <span>{ item.from }</span>
+            <span>{ item.date }</span>
+          </p>
+        </div>
+      </li>
     })
   }
   
@@ -170,6 +198,19 @@ class Index extends React.Component {
             )
           }}
         ></Grid>
+      </div>
+
+      {/* 4.最新资讯 */}
+      <div className="news">
+        {/* 标题 */}
+          <div className="news-title">
+            <h3>最新资讯</h3>
+          </div>
+        {/* 列表 */}
+        <ul>
+          {/* 一个li代表一条新闻 循环news数组 显示三条新闻  */}
+          { this.renderNews() }
+        </ul>
       </div>
     </div>
   }

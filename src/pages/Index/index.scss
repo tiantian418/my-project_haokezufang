@@ -5,6 +5,9 @@
 //     color:red;
 //   }
 // }
+.index {
+  margin-bottom: 50px;
+}
 
 // 3.租房小组
 .groups {
@@ -59,6 +62,45 @@
 
     img {
       width: 55px;
+    }
+  }
+}
+
+// 4.最新资讯
+.news {
+  padding: 10px; 
+  background-color: #fff;
+  .news-title h3 {
+    padding: 15px 0 15px 5px;
+    font-size: 15px;
+  }
+  ul {
+    li {
+      display: flex;
+      padding: 10px 0;
+      border-bottom: 1px solid #ccc;
+      img {
+        width: 120px;
+        height: 90px;
+        margin-right: 10px;
+      }
+      .item-right {
+        position: relative;
+        h3 {
+          margin-right: 25px;
+          font-size: 14px;
+        }
+        p {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          color: #9c9fa1;
+          font-size: 12px;
+        }
+      }
     }
   }
 }
