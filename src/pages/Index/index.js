@@ -51,7 +51,8 @@ class Index extends React.Component {
     imgHeight: 176,
     isplay:false, // 是否自动轮播
     groups: [], // 租房小组数据
-    news: [] // 最新资讯数据
+    news: [], // 最新资讯数据
+    cityName: '' // 当前定位城市
   }
 
   // 页面初次渲染
@@ -62,6 +63,16 @@ class Index extends React.Component {
     this.getGroups()
     // 发送请求 获取最新资讯数据
     this.getNews()
+    // 根据id获取当前定位城市
+    var myCity = new window.BMap.LocalCity() // LocalCity: 获取定位城市
+    myCity.get( result => {
+      var cityName = result.name
+      console.log("当前定位城市:", cityName)
+      // 赋值 定位城市
+      this.setState({
+        cityName
+      })
+    })
   }
 
   // 发送请求 获取轮播图
@@ -158,6 +169,37 @@ class Index extends React.Component {
   
   render () {
     return <div className="index">
+      {/* 顶部搜索栏 */}
+      <Flex className="searchBox">
+        {/* 左边选城市 */}
+        <Flex className="searchLeft">
+          <div
+            className="location"
+            onClick={ () => {
+              // 点击跳转到citylist城市选择页面
+              this.props.history.push('/citylist')
+            }}
+          >
+            {/* 获取定位的城市 */}
+            <span>{this.state.cityName}</span>
+            <i className="iconfont icon-arrow"></i>
+          </div>
+          {/* 中间输入框 */}
+          <div className="searchForm">
+            <i className="iconfont icon-search"></i>
+            <span>请输入小区或地址</span>
+          </div>
+        </Flex>
+        {/* 右边地图图标 */}
+        <i
+          className="iconfont icon-map"
+          onClick={ () => {
+            // 点击跳转到/map地图找房页面
+            this.props.history.push('/map')
+          }}
+        ></i>
+      </Flex>
+
       {/* 1.轮播图 */}
         <Carousel
           autoplay={this.state.isplay} // 自动轮播

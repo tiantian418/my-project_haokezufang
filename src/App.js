@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 // 导入组件
 import Home from './pages/Home'
 import Citylist from './pages/Citylist'
+import Map from './pages/Map'
 
 // 2.创建App组件
 class App extends React.Component {
@@ -20,13 +21,14 @@ class App extends React.Component {
         <Route
           exact
           path='/'
-          render={(props) => {
+          render={() => {
             return <Redirect to='/home/index'></Redirect>
           }}
         ></Route>
         <Route path='/home' component={Home}></Route>
         {/* 同级的兄弟 */}
         <Route exact path='/citylist' component={Citylist}></Route>
+        <Route exact path='/map' component={Map}></Route>
       </div>
     </Router>
   }
