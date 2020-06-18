@@ -67,7 +67,7 @@ class Index extends React.Component {
     var myCity = new window.BMap.LocalCity() // LocalCity: 获取定位城市
     myCity.get( result => {
       var cityName = result.name
-      console.log("当前定位城市:", cityName)
+      // console.log("当前定位城市:", cityName)
       // 赋值 定位城市
       this.setState({
         cityName
