@@ -63,7 +63,7 @@ class Index extends React.Component {
     this.getGroups()
     // 发送请求 获取最新资讯数据
     this.getNews()
-    // 根据id获取当前定位城市
+    // 根据ip获取当前定位城市
     var myCity = new window.BMap.LocalCity() // LocalCity: 获取定位城市
     myCity.get( result => {
       var cityName = result.name

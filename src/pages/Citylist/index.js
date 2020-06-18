@@ -10,9 +10,9 @@ class Citylist extends React.Component {
       <NavBar
         className="navbar"
         mode="light"
-        icon={<Icon type="left" />}
+        icon={<Icon type="left" style={{ color: '#7b7b7b' }} />}
         onLeftClick={() =>{
-          console.log('点击箭头了')
+          this.props.history.push('/home/index')
         }}
       >城市选择</NavBar>
     </div>
