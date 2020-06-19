@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { NavBar, Icon } from 'antd-mobile'
+import { NavBar, Icon, Toast } from 'antd-mobile'
 
 import './citylist.scss'
 
@@ -11,6 +11,9 @@ import { getCurrentCity } from '../../utils/index'
 import { List, AutoSizer } from 'react-virtualized'
 
 class Citylist extends React.Component {
+  // 1.创建ref 获取谁就给谁加
+  listRef = React.createRef()
+
   state = {
     citylist: {}, // 左侧城市列表
     cityindex: [], // 右侧单词数组
@@ -89,7 +92,24 @@ class Citylist extends React.Component {
         {/* 城市 */}
         { // 有几个城市就渲染循环生成几个div
           citys.map(item => {
-           return <div key={item.value} className="name">
+           return <div
+            key={item.value}
+            className="name"
+            onClick={() => {
+              // console.log('点击了城市',item.label)
+              let HouseCity = ['北京', '上海', '广州', '深圳']
+              // 数组.indexOf('上海'): 找到返回索引,找不到返回-1
+              if (HouseCity.indexOf(item.label) !== -1) {
+                // 切换城市 修改 存入点击的城市
+                localStorage.setItem('my-city', JSON.stringify(item))
+                // 跳转到首页
+                this.props.history.push('/home/index')
+              } else {
+                // 其它城市 提示暂无房源
+                Toast.info('该城市暂无房源哦', 2)
+              }
+            }}
+          >
               {item.label}
            </div>
           })
@@ -125,6 +145,13 @@ class Citylist extends React.Component {
       return <li
         key={index}
         className={index == this.state.activeIndex ? 'active': ''}
+        onClick={() => {
+          // 让list列表滚动到对应的顶部位置
+          // List组件的.scrollToRow(index:number)方法: 滚动到对应的索引那行
+          // List组件.scrollToRow(3) 滚动到对应是3的索引的那行
+          // console.log('点击获取list', this.listRef.current)
+          this.listRef.current.scrollToRow(index)
+        }}
       >
         {/* 将hot变成热字,其它大写 */}
         {item === 'hot' ? '热' : item.toUpperCase()}
@@ -166,6 +193,8 @@ class Citylist extends React.Component {
             rowHeight={ this.getHight } // 每行盒子的高度
             rowRenderer={ this.rowRenderer }
             onRowsRendered={ this.onRowsRendered }
+            ref={ this.listRef } // 2.ref属性
+            scrollToAlignment='start' // 点击滚动到顶部
           />
         )}
       </AutoSizer>
