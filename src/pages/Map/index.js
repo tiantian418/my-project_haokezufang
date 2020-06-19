@@ -32,7 +32,7 @@ class Map extends React.Component {
         mode="light"
         icon={<Icon type="left" style={{ color: '#7b7b7b' }} />}
         onLeftClick={() =>{
-          this.props.history.push('/home/index')
+          this.props.history.go(-1)
         }}
       >地图找房</NavBar>
       </div>

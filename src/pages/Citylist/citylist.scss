@@ -1,5 +1,7 @@
 .citylist {
   padding-top: 45px;
+  background-color: #fff;
+  height: 100%; // 占满屏幕
 }
 
 .navbar {
@@ -13,7 +15,7 @@
 .city {
   .title{
     font-size: 14px;
-    padding: 10px 15px;
+    padding: 10px 20px;
     color: #999;
   }
   .name{
@@ -23,5 +25,25 @@
     font-size: 16px;
     color: #333;
     border-bottom: 1px solid #eee;
+  }
+}
+
+.city-index {
+  position: fixed;
+  right: 15px;
+  top: 55px;
+  right: 15px;
+  li {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    margin-bottom: 8px;
+    border-radius: 50%;
+  }
+  .active {
+    background-color: #21b97a;
+    color: #fff;
   }
 }

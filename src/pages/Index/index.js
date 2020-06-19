@@ -17,6 +17,8 @@ import './index.css'
 // 导入scss
 import './index.scss'
 
+import { getCurrentCity } from '../../utils/index'
+
 // 找房子
 const navs = [
   {
@@ -56,23 +58,30 @@ class Index extends React.Component {
   }
 
   // 页面初次渲染
-  componentDidMount () {
+  async componentDidMount () {
     // 当页面打开 发送请求 获取轮播图 渲染数据
     this.getSwiperdata()
     // 发送请求 获取租房小组数据
     this.getGroups()
     // 发送请求 获取最新资讯数据
     this.getNews()
-    // 根据ip获取当前定位城市
-    var myCity = new window.BMap.LocalCity() // LocalCity: 获取定位城市
-    myCity.get( result => {
-      var cityName = result.name
-      // console.log("当前定位城市:", cityName)
-      // 赋值 定位城市
-      this.setState({
-        cityName
-      })
+    // 调用getCurrentCity
+    let dingwei = await getCurrentCity()
+    // label: 城市名 value: 城市id
+    // console.log('首页定位', dingwei)
+    this.setState({
+      cityName: dingwei.label
     })
+    // // 根据ip获取当前定位城市
+    // var myCity = new window.BMap.LocalCity() // LocalCity: 获取定位城市
+    // myCity.get( result => {
+    //   var cityName = result.name
+    //   // console.log("当前定位城市:", cityName)
+    //   // 赋值 定位城市
+    //   this.setState({
+    //     cityName
+    //   })
+    // })
   }
 
   // 发送请求 获取轮播图
