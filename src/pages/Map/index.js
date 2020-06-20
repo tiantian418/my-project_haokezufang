@@ -2,7 +2,7 @@ import React from 'react'
 
 import './map.scss'
 
-import { NavBar, Icon } from 'antd-mobile'
+import NavHeader from '../../components/NavHeader'
 
 const BMap = window.BMap
 
@@ -25,16 +25,10 @@ class Map extends React.Component {
   render() {
     return (
       <div className="map">
+        {/* 顶部导航栏 */}
+        <NavHeader>地图找房</NavHeader>
         {/* 用来放地图 */}
         <div id="container"></div>
-        <NavBar
-        className="navbar"
-        mode="light"
-        icon={<Icon type="left" style={{ color: '#7b7b7b' }} />}
-        onLeftClick={() =>{
-          this.props.history.go(-1)
-        }}
-      >地图找房</NavBar>
       </div>
     )
   }
