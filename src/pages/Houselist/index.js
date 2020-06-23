@@ -1,9 +1,12 @@
 import React from 'react'
 
+import Filter from './components/Filter'
+
 class Houselist extends React.Component {
   render () {
     return <div>
-      我是Houselist找房页面
+      {/* Filter: 筛选条件组件 */}
+      <Filter></Filter>
     </div>
   }
 }

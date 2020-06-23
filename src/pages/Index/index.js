@@ -5,6 +5,8 @@ import { Carousel, Flex, Grid } from 'antd-mobile'
 // 导入axios
 import axios from 'axios'
 
+import { API } from '../../utils/api'
+
 // {/* react里面不能直接使用本地图片 需要先导入 */}
 import nav1 from '../../assets/images/nav-1.png'
 import nav2 from '../../assets/images/nav-2.png'
@@ -86,7 +88,8 @@ class Index extends React.Component {
 
   // 发送请求 获取轮播图
   async getSwiperdata () {
-    let res = await axios.get('http://api-haoke-dev.itheima.net/home/swiper')
+    // let res = await axios.get('http://api-haoke-web.itheima.net/home/swiper')
+    let res = await API.get('/home/swiper')
     // console.log("轮播图数据", res)
     // 赋值轮播图数组
     if (res.data.status !== 200) {
@@ -107,7 +110,7 @@ class Index extends React.Component {
   // 发送请求 获取租房小组数据
   async getGroups () {
     // AREA%7C88cff55c-aaa4-e2e0: 参数id
-    let res = await axios.get('http://api-haoke-dev.itheima.net/home/groups?area=AREA%7C88cff55c-aaa4-e2e0')
+    let res = await axios.get('http://api-haoke-web.itheima.net/home/groups?area=AREA%7C88cff55c-aaa4-e2e0')
     // console.log("租房小组数据", res)
     // 赋值数据给groups
     this.setState({
@@ -117,7 +120,7 @@ class Index extends React.Component {
 
   // 发送请求 获取最新资讯数据
   async getNews() {
-    let res = await axios.get('http://api-haoke-dev.itheima.net/home/news?area=AREA%7C88cff55c-aaa4-e2e0')
+    let res = await axios.get('http://api-haoke-web.itheima.net/home/news?area=AREA%7C88cff55c-aaa4-e2e0')
     // console.log("最新资讯数据", res)
     this.setState({
       news: res.data.body
@@ -133,7 +136,7 @@ class Index extends React.Component {
         style={{ display: 'inline-block', width: '100%', height: this.state.imgHeight }}
       >
         <img
-          src={`http://api-haoke-dev.itheima.net${item.imgSrc}`}
+          src={`http://api-haoke-web.itheima.net${item.imgSrc}`}
           alt=''
           style={{ width: '100%', verticalAlign: 'top' }}
           onLoad={() => {
@@ -164,7 +167,7 @@ class Index extends React.Component {
   renderNews () {
     return this.state.news.map ( item => {
       return <li key={ item.id }>
-        <img alt="" src={ `http://api-haoke-dev.itheima.net${item.imgSrc}` } />
+        <img alt="" src={ `http://api-haoke-web.itheima.net${item.imgSrc}` } />
         <div className="item-right">
           <h3>{ item.title }</h3>
           <p>
@@ -244,7 +247,7 @@ class Index extends React.Component {
                 <h3>{item.title}</h3>
                 <p>{item.desc}</p>
                 </div>
-                <img alt="" src={`http://api-haoke-dev.itheima.net${item.imgSrc} `}/>
+                <img alt="" src={`http://api-haoke-web.itheima.net${item.imgSrc} `}/>
               </Flex>
             )
           }}

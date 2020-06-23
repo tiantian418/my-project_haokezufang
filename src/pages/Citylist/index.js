@@ -27,14 +27,14 @@ class Citylist extends React.Component {
 
   // 发送请求,获取城市列表数据
   async getCityList () {
-    let res = await axios.get('http://api-haoke-dev.itheima.net/area/city?level=1')
+    let res = await axios.get('http://api-haoke-web.itheima.net/area/city?level=1')
     // console.log('城市列表数据', res)
 
     // 1.格式化城市数据
     let { citylist, cityindex } = this.formatCity(res.data.body)
 
     // 2.获取热门城市
-    let hotRes = await axios.get('http://api-haoke-dev.itheima.net/area/hot')
+    let hotRes = await axios.get('http://api-haoke-web.itheima.net/area/hot')
     // console.log('热门城市数据', hotRes)
     citylist['hot'] = hotRes.data.body
     cityindex.unshift('hot') // 在前面插入
@@ -144,7 +144,7 @@ class Citylist extends React.Component {
     return this.state.cityindex.map((item, index) => {
       return <li
         key={index}
-        className={index == this.state.activeIndex ? 'active': ''}
+        className={index === this.state.activeIndex ? 'active': ''}
         onClick={() => {
           // 让list列表滚动到对应的顶部位置
           // List组件的.scrollToRow(index:number)方法: 滚动到对应的索引那行
@@ -165,7 +165,7 @@ class Citylist extends React.Component {
   onRowsRendered  = ({startIndex}) => {
     // console.log(startIndex)
     // 修改activeIndex索引 对应单词高亮
-    if (startIndex != this.state.activeIndex) {
+    if (startIndex !== this.state.activeIndex) {
       this.setState({
         activeIndex: startIndex
       })

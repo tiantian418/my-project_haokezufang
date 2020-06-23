@@ -18,7 +18,7 @@ export let getCurrentCity = () => {
         var cityName = result.name
 
         // 2.发送请求 获取城市名字+城市id
-        let dingwei = await axios.get('http://api-haoke-dev.itheima.net/area/info?name='+cityName)
+        let dingwei = await axios.get('http://api-haoke-web.itheima.net/area/info?name='+cityName)
         // console.log('定位城市数据', dingwei.data.body)
 
         // 3.百度定位后,存在本地 localStrong.setItem('名字', 字符串值)
