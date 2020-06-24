@@ -12,16 +12,27 @@ const titleList = [
   { title: '筛选', type: 'more' }
 ]
 
-export default function FilterTitle() {
+export default function FilterTitle(props) {
+  let { titleStatus } = props
   return (
     <Flex align="center" className={styles.root}>
-      <Flex.Item>
-        {/* 选中类名： selected */}
-        <span className={[styles.dropdown, styles.selected].join(' ')}>
-          <span>区域</span>
-          <i className="iconfont icon-arrow" />
-        </span>
-      </Flex.Item>
+      {/* 一个Flex.item标题循环titleList生成四个标题 */}
+      {
+        titleList.map(item => {
+          return <Flex.Item
+            key={item.type}
+            onClick={() => {
+              // 调用父组件的onTitleClick函数
+              props.onTitleClick(item.type)
+            }}
+          >
+            <span className={[styles.dropdown, titleStatus[item.type] ? styles.selected : ''].join(' ')}>
+              <span>{item.title}</span>
+              <i className="iconfont icon-arrow" />
+            </span>
+          </Flex.Item>
+        })
+      }
     </Flex>
   )
 }

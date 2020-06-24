@@ -4,6 +4,7 @@ import { PickerView } from 'antd-mobile'
 
 import FilterFooter from '../../../../components/FilterFooter'
 
+// 测试数据
 const province = [
   {
     label: '北京',
@@ -88,14 +89,28 @@ const province = [
 ]
 
 export default class FilterPicker extends Component {
+  state = {
+    value: null // 选择值
+  }
+
   render() {
     return (
       <>
         {/* 选择器组件： */}
-        <PickerView data={province} value={null} cols={3} />
+        <PickerView
+          data={this.props.data} // 数据 下拉的选项值
+          value={null} // 默认选中值
+          cols={this.props.cols} // 列数
+          onChange={(val) => {
+            // console.log('下拉的选中值', val)
+            this.setState({
+              value: val
+            })
+          }}
+        />
 
         {/* 底部按钮 */}
-        <FilterFooter />
+        <FilterFooter onCancel={this.props.onCancel} onSave={this.props.onSave} />
       </>
     )
   }
