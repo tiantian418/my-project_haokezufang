@@ -90,7 +90,7 @@ const province = [
 
 export default class FilterPicker extends Component {
   state = {
-    value: null // 选择值
+    value: this.props.defaultValues // 选择值
   }
 
   render() {
@@ -99,7 +99,7 @@ export default class FilterPicker extends Component {
         {/* 选择器组件： */}
         <PickerView
           data={this.props.data} // 数据 下拉的选项值
-          value={null} // 默认选中值
+          value={this.state.value} // 默认选中值
           cols={this.props.cols} // 列数
           onChange={(val) => {
             // console.log('下拉的选中值', val)
@@ -110,7 +110,13 @@ export default class FilterPicker extends Component {
         />
 
         {/* 底部按钮 */}
-        <FilterFooter onCancel={this.props.onCancel} onSave={this.props.onSave} />
+        <FilterFooter
+          onCancel={this.props.onCancel}
+          onSave= {() => {
+            // 点击确定 把对应的条件 传给Filter存起来
+            this.props.onSave(this.state.value)
+          }}
+        />
       </>
     )
   }
