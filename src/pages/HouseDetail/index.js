@@ -102,6 +102,7 @@ export default class HouseDetail extends Component {
   componentDidMount () {
     // 页面打开 根据id发送请求 获取房子详情信息 渲染页面
     this.getHouseDetail()
+
   }
 
   // 根据id发送请求 获取房子详情信息 渲染页面
@@ -130,7 +131,10 @@ export default class HouseDetail extends Component {
 
   // 渲染轮播图结构
   renderSwipers () {
-    const { houseInfo: { slides } } = this.state
+    const {
+      houseInfo: { slides }
+    } = this.state
+
     return slides.map((item, index) => (
       <a
         key={index}

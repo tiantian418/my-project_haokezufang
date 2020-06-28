@@ -12,7 +12,7 @@ import Home from './pages/Home'
 import Citylist from './pages/Citylist'
 import Map from './pages/Map'
 import HouseDetail from './pages/HouseDetail'
-import Index from './pages/Index'
+import Login from './pages/Login'
 
 // 2.创建App组件
 class App extends React.Component {
@@ -32,7 +32,7 @@ class App extends React.Component {
         <Route exact path='/citylist' component={Citylist}></Route>
         <Route exact path='/map' component={Map}></Route>
         <Route exact path="/detail/:id" component={HouseDetail}></Route>
-        <Route exact path='/index' component={Index}></Route>
+        <Route exact path='/login' component={Login}></Route>
       </div>
     </Router>
   }
