@@ -18,16 +18,16 @@ import Sticky from '../../components/sticky'
 import { Toast } from 'antd-mobile'
 
 // 引入动画
-import {Spring} from 'react-spring/renderprops'
+import { Spring } from 'react-spring/renderprops'
 
 class Houselist extends React.Component {
-  state= {
+  state = {
     cityname: '',
     count: 0, // 总条数
     list: [] // 房子数组
   }
 
-  async componentDidMount() {
+  async componentDidMount () {
     let dingwei = await getCurrentCity()
     this.setState({
       cityname: dingwei.label
@@ -47,7 +47,7 @@ class Houselist extends React.Component {
   }
 
   // 发送请求获取满足条件的房子列表
-  async searchHouseList() {
+  async searchHouseList () {
     let dingwei = await getCurrentCity()
     // 发送请求之前 显示loading
     Toast.loading('正在加载...', 0)
@@ -71,13 +71,13 @@ class Houselist extends React.Component {
   }
 
   // 每条数据 渲染的函数  里面可以写 html内容
-  rowRenderer=({
+  rowRenderer = ({
     key, // 唯一key
     index, // 索引
     // isScrolling, // 正在滚动
     // isVisible, // 是否可见
     style, // 每个大盒子div 必须写 控制样式
-  })=> {
+  }) => {
     // 渲染每一个房子
     let house = this.state.list[index] // 拿出每一条数据
     // console.log('房子数据', house)
@@ -90,11 +90,20 @@ class Houselist extends React.Component {
     }
     // 有房子才渲染
     return (
-      <div key={key} style={style} className={styles.house}>
+      <div
+        key={key}
+        style={style}
+        className={styles.house}
+        onClick={() => {
+          // 点击房子 跳转到详情页并传id
+          this.props.history.push('/detail/' + house.houseCode)
+        }}
+      >
         {/* 左边图片 */}
         <div className={styles.imgWrap}>
           <img className={styles.img} src={`http://api-haoke-web.itheima.net${house.houseImg}`} alt="" />
         </div>
+
         {/* 右边文字 */}
         <div className={styles.content}>
           <h3 className={styles.title}>{house.title}</h3>
@@ -103,7 +112,7 @@ class Houselist extends React.Component {
             {/* ['近地铁', '随时看房'] */}
             {
               house.tags.map((item, index) => {
-                return <span key={index} className={[styles.tag,styles.tag1 ].join(' ')} >
+                return <span key={index} className={[styles.tag, styles.tag1].join(' ')} >
                   {item}
                 </span>
               })
@@ -126,7 +135,7 @@ class Houselist extends React.Component {
   // 加载更多
   loadMoreRows = ({ startIndex, stopIndex }) => {
     // console.log('加载更多')
-    return new Promise( async resolve => {
+    return new Promise(async resolve => {
       // 发送请求 获取更多数据
       let dingwei = await getCurrentCity()
       let res = await API.get('/houses', {
@@ -149,30 +158,30 @@ class Houselist extends React.Component {
     })
   }
 
-  render() {
+  render () {
     return <div className="houselist">
       {/* 使用react动画让搜索导航栏慢慢显示出来 */}
       <Spring
         from={{ opacity: 0, backgroundColor: '#fff' }} // 开始样式对象
         to={{ opacity: 1, backgroundColor: 'orange' }} // 结束样式对象
         config={{ duration: 3000 }} // 配置时间动画
-      > 
+      >
         {(props) => {
-          {/* 顶部导航栏 */}
+          // 顶部导航栏
           return <div style={props} className="header">
             {/* 左箭头 */}
             <i className="iconfont icon-back"></i>
             {/* 传入当前定位城市 */}
-            <SearchHeader cityname={ this.state.cityname }></SearchHeader>
-          </div>  
+            <SearchHeader cityname={this.state.cityname}></SearchHeader>
+          </div>
         }}
       </Spring>
-      
+
       {/* Filter: 筛选条件组件 */}
       <Sticky height={40}>
         <Filter onFilter={this.onFilter}></Filter>
       </Sticky>
-      
+
 
       {/* 房子列表 */}
       <InfiniteLoader
@@ -182,7 +191,7 @@ class Houselist extends React.Component {
       >
         {({ onRowsRendered, registerChild }) => (
           <WindowScroller>
-            {({ height, isScrolling,onChildScroll, scrollTop }) => (
+            {({ height, isScrolling, onChildScroll, scrollTop }) => (
               <AutoSizer>
                 {({ width }) => (
                   <List
