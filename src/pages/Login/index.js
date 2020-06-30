@@ -21,7 +21,7 @@ import * as Yup from 'yup'
 // const REG_PWD = /^[a-zA-Z_\d]{5,12}$/
 
 class Login extends Component {
-  render () {
+  render() {
     return (
       <div className={styles.root}>
         {/* 顶部导航 */}
@@ -108,10 +108,12 @@ export default withFormik({
     // console.log('登录结果', res)
     if (res.data.status === 200) { // 登录成功
       // 登录成功提示成功  存token
-      Toast.success('登录成功~~', 2)
+      Toast.success('登录成功~~', 1)
       localStorage.setItem('my-token', res.data.body.token)
+      // 跳转 props传来的 不能用 this.props
+      props.history.go(-1)
     } else { // 登录失败
-      Toast.fail('登录失败啦~~', 2)
+      Toast.fail('登录失败啦~~', 1)
     }
   }
 })(Login)
