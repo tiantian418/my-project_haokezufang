@@ -110,7 +110,6 @@ export default withFormik({
       // 登录成功提示成功  存token
       Toast.success('登录成功~~', 1)
       localStorage.setItem('my-token', res.data.body.token)
-      // 跳转 props传来的 不能用 this.props
       props.history.go(-1)
     } else { // 登录失败
       Toast.fail('登录失败啦~~', 1)
