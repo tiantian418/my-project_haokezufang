@@ -1,68 +1,66 @@
-/**
- * 根组件
- */
+/* 
+  配置路由
+*/
 
-// 1.导入react
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 
+// 导入路由的三个组件
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
-// 导入组件
+// 导入页面组件
 import Home from './pages/Home'
-import Citylist from './pages/Citylist'
-import Map from './pages/Map'
-import HouseDetail from './pages/HouseDetail'
-import Login from './pages/Login'
-import Rent from './pages/Rent'
-import RentAdd from './pages/Rent/Add'
-import RentSearch from './pages/Rent/Search'
-import AuthRoute from './components/AuthRoute'
 
-// 2.创建App组件
-class App extends React.Component {
-  render() {
-    return <Router>
-      <div className="app">
-        {/* 默认 / 跳转到首页 */}
-        <Route
-          exact
-          path='/'
-          render={() => {
-            return <Redirect to='/home/index'></Redirect>
-          }}
-        ></Route>
-        <Route path='/home' component={Home}></Route>
-        {/* 同级的兄弟 */}
-        <Route exact path='/citylist' component={Citylist}></Route>
-        <Route exact path='/map' component={Map}></Route>
-        <Route exact path="/detail/:id" component={HouseDetail}></Route>
-        <Route exact path='/login' component={Login}></Route>
+const Map = lazy(() => import('./pages/Map'))
 
-        {/* react的两种写法 */}
-        {/* 第一种写法 */}
-        {/* <Route exact path='/rent' component={Rent}></Route> */}
+const HouseDetail = lazy(() => import('./pages/HouseDetail'))
 
-        {/* 第二种写法 很多页面都需要 所以封装 AuthRoute 鉴权路由 */}
-        <AuthRoute exact={true} path='/rent' Yemian={Rent}></AuthRoute>
-        <AuthRoute exact={true} path='/rent/add' Yemian={RentAdd}></AuthRoute>
-        <AuthRoute exact={true} path='/rent/search' Yemian={RentSearch}></AuthRoute>
-        {/* <Route
-          exact
-          path='/rent'
-          render={(props) => {
-            // 有token就是登录 跳转到rent
-            if (isAuth()) {
-              return <Rent></Rent>
-            } else {
-              // 没有登录 跳转到login页面
-              return < Redirect to='/login'></Redirect>
-            }
-          }}
-        ></Route> */}
-      </div>
+const Login = lazy(() => import('./pages/Login'))
+
+const Rent = lazy(() => import('./pages/Rent'))
+
+const RentAdd = lazy(() => import('./pages/Rent/Add'))
+
+const RentSearch = lazy(() => import('./pages/Rent/Search'))
+
+const AuthRoute = lazy(() => import('./components/AuthRoute'))
+
+const Citylist = lazy(() => import('./pages/Citylist'))
+
+const App = () => {
+  return (
+    <Router>
+      <Suspense fallback={<div className="loading">loading...</div>}>
+        <div className="App">
+          {/* 配置路由 */}
+          {/* render 属性，实际上就是 render-props 模式，可以通过 props 属性，来拿到 Route 组件内部暴露出来的 路由信息 */}
+          <Route
+            exact
+            path="/"
+            render={props => {
+              // console.log('render-props模式：', props)
+              // Redirect 组件：是路由的重定向组件，通过 to 属性，来指定要重定向到的路由地址
+              return <Redirect to="/home" />
+            }}
+          />
+
+          {/* 
+          /home 路由规则：能够匹配所有以 /home 开头的 pathname
+            比如：/home/profile
+        */}
+          <Route path="/home" component={Home} />
+          <Route path="/citylist" component={Citylist} />
+          <Route path="/map" component={Map} />
+          <Route path="/details/:id" component={HouseDetail} />
+          <Route path="/login" component={Login} />
+
+          {/* AuthRoute 组件 */}
+          <AuthRoute exact path="/rent" component={Rent} />
+          <AuthRoute path="/rent/add" component={RentAdd} />
+          <AuthRoute path="/rent/search" component={RentSearch} />
+        </div>
+      </Suspense>
     </Router>
-  }
+  )
 }
 
-// 3.导出App组件
 export default App
