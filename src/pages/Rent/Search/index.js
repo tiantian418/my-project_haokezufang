@@ -53,7 +53,18 @@ export default class Search extends Component {
     const { tipsList } = this.state
 
     return tipsList.map(item => (
-      <li key={item.community} className={styles.tip}>
+      <li
+        key={item.community}
+        className={styles.tip}
+        onClick={() => {
+          // 点击小区名称 跳转到add发布房源页面
+          this.props.history.push('/rent/add', {
+            // 参数名: 值
+            id: item.community, // 小区id
+            name: item.communityName // 小区名字
+          })
+        }}
+      >
         {item.communityName}
       </li>
     ))
